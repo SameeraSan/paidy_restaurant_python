@@ -32,7 +32,7 @@ async def create_order_service(request: OrderSchema, db: Session = Depends(get_d
     crud.create_order(db, request)
     return Response(status="Ok",
                     code="200",
-                    message="Book created successfully").dict(exclude_none=True)
+                    message="Order created successfully").dict(exclude_none=True)
 
 @router.delete("/delete/{table_id}/{item_id}")
 async def remove_order(table_id: int, item_id: int, db: Session = Depends(get_db)):

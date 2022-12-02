@@ -30,11 +30,7 @@ Create a restaurant application which accepts menu items from various serving st
 - The API is up to the developer. HTTP REST is acceptable, but direct API calls are also acceptable if they mimic an HTTP REST-like API (e.g. api_call1(string id, string resource), etc.).
 
 ### My Assumptions
-- To fulfill your requirements I used Jax-rs since I can handle database functions as you requested, otherwise I would have gone with a newer framework like Spring Boot
-- Since this is a demo App, all configurations stored in a Java class for the simplicity (those data should store in a database or a config server in real life)
-- Used basic auth 
-- Wrote few Junit test cases just to demo
-- Although you ask for a production ready application, in the limited time I have tried to cover the basic requirements.
+- Used python FastApi as a new technology that I haven't used before
 
 ---
 
@@ -56,18 +52,13 @@ uvicorn main:app --reload
 
 ### Configure
 
-- server.port=8080(default)
+- default port : 8000
 
 - database = paidy
-- db username = paidy
+- db username = postgres
 - db password = password
-- refer SystemConfig class for more configs
+- refer config.py class for more configs
 > 
-
-
-### Once you complete the configuring project you can run the project 
-- Run the application on IDE
-- Deploy restaurant.war on application server and run the app
 
 --- 
 
@@ -80,8 +71,11 @@ uvicorn main:app --reload
 - application login username = **paidy**
 - application login password = **password**
 
+- Can directly test using below URL, in there you'll find relevant API end points and requests.
+> **http://localhost:8000/docs**
+
 #### Get items for a given table number
-- url (GET) = **http://localhost:8080/restaurant/v1/item/{tableNo}**
+- url (GET) = **http://localhost:8000/restaurant/v1/item/{tableNo}**
 > Response : [
     {
         "cookTime": 9,
@@ -99,38 +93,50 @@ uvicorn main:app --reload
 ]
 > 
 #### Get details of an item by giving item number and table number
-- url (GET) = **http://localhost:8080/restaurant/v1/item/{tableNo}/{ItemNo}**
+- url (GET) = **http://localhost:8000/restaurant/v1/item/{tableNo}/{ItemNo}**
 - > Response : {
-    "cookTime": 9,
-    "itemName": "item 1",
-    "itemNo": 1,
-    "quantity": 3,
-    "status": 3
+    "code": "200",
+    "status": "Ok",
+    "message": "Success fetch all data",
+    "result": {
+        "item_id": 0,
+        "id": 3,
+        "cook_time": 0,
+        "notes": "string",
+        "status": 0,
+        "order_id": "string",
+        "table_id": 0,
+        "quantity": 0
+    }
 }
   > 
 #### Create Order
-- url (POST) = **http://localhost:8080/restaurant/v1/order/create**
+- url (POST) = **http://localhost:8000/restaurant/v1/order**
 > Request : {
-    "orderId" : "Order 1",
-    "tableId":1,
-    "notes":"Less spicy",
-    "items":[{
-        "itemNo":1,
-        "quantity":2   
-    }, {
-        "itemNo":2,
-        "quantity":3   
-    }
-    ]
+ 
+  "order_id": "my order",
+  "table_id": 1,
+  "item_id": 2,
+  "status": 1,
+  "quantity": 2,
+  "notes": "spicy"
 }
 >
 >
-> Response : The Order Placed!
+> Response : {
+    "code": "200",
+    "status": "Ok",
+    "message": "Order created successfully"
+}
 > 
 #### Delete Order
-- url (GET) = **http://localhost:8080/restaurant/v1/order/delete/{tableNo}/{ItemNo}**
+- url (GET) = **http://localhost:8000/restaurant/v1/delete/{tableNo}/{ItemNo}**
 
-> Response : Item Deleted from the Order
+> Response : {
+    "code": "200",
+    "status": "Ok",
+    "message": "Success delete data"
+}
 
 ---
 
